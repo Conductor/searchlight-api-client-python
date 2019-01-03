@@ -3,15 +3,21 @@ import pandas as pd
 from .client import AccountService
 
 
+def get_search_df(ss, wpid):
+    searches = ss.get_searches(wpid).json()
+    if not searches:
+        return
+    searches = pd.DataFrame(searches)
+    searches["trackedSearchId"] = searches["trackedSearchId"].astype(int)
+    return searches
+
 def search_volume(account, date="CURRENT", seasonal=False):
     ss = AccountService(account)
-    web_properties = [wp for wp in ss.get_web_properties().json() if wp["isActive"]]
+    web_properties = [wp for wp in ss.get_web_properties().json()]
     df_list = []
     for wp in web_properties:
         wpid = wp["webPropertyId"]
-        searches = ss.get_searches(wpid).json()
-        if not searches:
-            continue
+        searches = get_search_df(ss, wpid)
         rank_sources = [rs["rankSourceId"] for rs in wp["rankSourceInfo"]]
         volumes = []
         for rsid in rank_sources:
@@ -21,7 +27,7 @@ def search_volume(account, date="CURRENT", seasonal=False):
             volumes.extend(msv)
         if not volumes:
             continue
-        temp = pd.concat(volumes)
+        temp = pd.DataFrame(volumes)
         df_list.append(pd.merge(temp, pd.DataFrame(searches), how="left", on="trackedSearchId"))
     if not df_list:
         raise RuntimeError("No volume data found for the given account and date")
@@ -34,13 +40,11 @@ def search_volume(account, date="CURRENT", seasonal=False):
 
 def rank_data(account, date="CURRENT"):
     ss = AccountService(account)
-    web_properties = [wp for wp in ss.get_web_properties().json() if wp["isActive"]]
+    web_properties = [wp for wp in ss.get_web_properties().json()]
     df_list = []
     for wp in web_properties:
         wpid = wp["webPropertyId"]
-        searches = ss.get_searches(wpid).json()
-        if not searches:
-            continue
+        searches = get_search_df(ss, wpid)
         rank_sources = [rs["rankSourceId"] for rs in wp["rankSourceInfo"]]
         rankers = []
         for rsid in rank_sources:
@@ -50,8 +54,8 @@ def rank_data(account, date="CURRENT"):
             rankers.extend(ranks)
         if not rankers:
             continue
-        temp = pd.concat(rankers)
-        df_list.append(pd.merge(temp, pd.DataFrame(searches), how="left", on="trackedSearchId"))
+        temp = pd.DataFrame(rankers)
+        df_list.append(pd.merge(temp, searches, how="left", on="trackedSearchId"))
     if not df_list:
         raise RuntimeError("No rank data found for the given account and date")
     df = pd.concat(df_list)
