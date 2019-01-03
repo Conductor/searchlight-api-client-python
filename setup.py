@@ -12,6 +12,7 @@ setup(
     author_email="dgoodman@conductor.com",
     url="https://github.com/Conductor/searchlight-api-client-python",
     packages=find_packages(exclude=("docs", "searchlight.tests")),
+    setup_requires=["nose"],
     install_requires=[
         "simplejson>=3.11.1",
         "requests>=2.19.1",

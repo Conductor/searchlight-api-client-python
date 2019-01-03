@@ -9,10 +9,10 @@ help:
 	# make test                           - Builds all required images
 	#
 
-test: install nosetests
+test: nosetests
 
 nosetests:
-    @nosetests
+    @python setup.py nosetests
 
 install:
     @pip install -r requirements.txt
