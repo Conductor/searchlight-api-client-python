@@ -86,7 +86,7 @@ class SearchlightService(object):
         return self._make_request("{api_url}/{acct}/categories".format(api_url=self._api_url,
                                                                        acct=self.account_id))
 
-    def get_keywords_by_category(self):
+    def get_keywords_with_categories(self):
         """Returns categories and their tracked searches"""
         return self._make_request("{v3_url}/accounts/{acct}/categories".format(v3_url=self._v3_url,
                                                                                   acct=self.account_id))
