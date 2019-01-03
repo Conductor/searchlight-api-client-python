@@ -1,4 +1,4 @@
-.PHONY: test
+.PHONY: help test nosetests intall
 
 help:
 	# Commands
@@ -7,6 +7,7 @@ help:
 	# Dev commands:
 	# make install                        - Install requirements.txt
 	# make test                           - Builds all required images
+	#
 
 test: install nosetests
 
@@ -14,4 +15,4 @@ nosetests:
     @nosetests
 
 install:
-    pip install -r requirements.txt
+    @pip install -r requirements.txt
