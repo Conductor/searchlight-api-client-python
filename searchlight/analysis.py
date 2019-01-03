@@ -1,10 +1,10 @@
 import pandas as pd
 
-from .client import SearchlightService
+from .client import AccountService
 
 
 def search_volume(account, date="CURRENT", seasonal=False):
-    ss = SearchlightService(account)
+    ss = AccountService(account)
     web_properties = [wp for wp in ss.get_web_properties().json() if wp["isActive"]]
     df_list = []
     for wp in web_properties:
@@ -33,7 +33,7 @@ def search_volume(account, date="CURRENT", seasonal=False):
 
 
 def rank_data(account, date="CURRENT"):
-    ss = SearchlightService(account)
+    ss = AccountService(account)
     web_properties = [wp for wp in ss.get_web_properties().json() if wp["isActive"]]
     df_list = []
     for wp in web_properties:
