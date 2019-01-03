@@ -59,4 +59,3 @@ def rank_data(account, date="CURRENT"):
     df["trueRank"].fillna(101, inplace=True)
     df["classicRank"].fillna(101, inplace=True)
     return pd.concat(df_list)
-.

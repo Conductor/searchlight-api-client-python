@@ -42,7 +42,21 @@ class SearchlightService(object):
                 return
         return res
 
-    # Configuration Data
+    # Searchlight Configuration Data
+
+    def get_locations(self):
+        """All locations supported by Searchlight"""
+        return self._make_request("{v3_url}/locations".format(v3_url=self._v3_url))
+
+    def get_engines(self):
+        """Returns all supported engines"""
+        return self._make_request("{v3_url}/rank-sources".format(v3_url=self._v3_url))
+
+    def get_devices(self):
+        """Returns all supported devices"""
+        return self._make_request("{v3_url}/devices".format(v3_url=self._v3_url))
+
+    # Account Configuration Data
 
     def get_account_overview(self):
         """Retrieves account metadata"""
