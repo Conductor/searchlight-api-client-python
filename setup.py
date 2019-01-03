@@ -1,16 +1,17 @@
-from setuptools import setup
+from setuptools import setup, find_packages
+
+with open("README.md") as f:
+    description = f.read()
 
 setup(
     name="searchlight",
     version="0.0.1",
-    description="A suite of tools for accessing data in Searchlight",
-    url="https://github.com/Conductor/searchlight-api-client-python",
+    description="A client to assist in connecting with Searchlight's API",
+    long_description=description,
     author="Dan Goodman",
     author_email="dgoodman@conductor.com",
-    packages=[
-        "searchlight",
-        "searchlight.utils",
-    ],
+    url="https://github.com/Conductor/searchlight-api-client-python",
+    packages=find_packages(exclude=("docs", "tests")),
     install_requires=[
         "simplejson>=3.11.1",
         "requests>=2.19.1",
