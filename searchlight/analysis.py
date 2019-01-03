@@ -29,7 +29,7 @@ def search_volume(account, date="CURRENT", seasonal=False):
     df["averageVolume"].fillna(0, inplace=True)
     if seasonal:
         return
-    return df.drop("volumeItems", inplace=True, axis=1)
+    return df.drop("volumeItems", axis=1)
 
 
 def rank_data(account, date="CURRENT"):
