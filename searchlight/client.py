@@ -6,7 +6,7 @@ import time
 from .utils import week_number
 
 
-class SearchlightServices(object):
+class SearchlightService(object):
     def __init__(self, account_id, **kwargs):
         self.account_id = account_id
         self._api_key = kwargs.get("api_key", os.environ.get("SEARCHLIGHT_API_KEY"))
