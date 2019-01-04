@@ -9,7 +9,7 @@ help:
 	# make test                           - Builds all required images
 	#
 
-test: nosetests
+test: install nosetests
 
 nosetests:
 	@python setup.py nosetests
