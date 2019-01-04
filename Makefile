@@ -12,7 +12,7 @@ help:
 test: nosetests
 
 nosetests:
-    @python setup.py nosetests
+	@python setup.py nosetests
 
 install:
-    @pip install -r requirements.txt
+	@pip install -r requirements.txt
