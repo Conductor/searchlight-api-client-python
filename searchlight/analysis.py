@@ -7,6 +7,7 @@ from .client import AccountService
 
 
 def get_search_df(ss, wpid):
+    """Transforms search response into dataframe"""
     searches = ss.get_searches(wpid).json()
     if not searches:
         return
@@ -16,6 +17,7 @@ def get_search_df(ss, wpid):
 
 
 def get_seasonal_volume(volume_items):
+    """Used to get seasonal data from search volume response"""
     month = volume_items.loc[0][0]["month"]
     year = volume_items.loc[0][0]["year"]
     date = datetime.datetime(year, month, 1)
