@@ -15,4 +15,5 @@ nosetests:
 	@python setup.py nosetests
 
 install:
+	@apt-get install -y python-setuptools
 	@pip install -r requirements.txt
