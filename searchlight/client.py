@@ -56,10 +56,9 @@ class SearchlightService(object):
         return self._make_request("{v3_url}/devices".format(v3_url=self._v3_url))
 
 
-
 class AccountService(SearchlightService):
     def __init__(self, account_id, **kwargs):
-        super().__init__(**kwargs)
+        SearchlightService.__init__(self, **kwargs)
         self.account_id = account_id
     # Account Configuration Data
 

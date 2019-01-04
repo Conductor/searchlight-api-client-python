@@ -1,13 +1,14 @@
 from setuptools import setup, find_packages
 
 with open("README.md") as f:
-    description = f.read()
+    long_description = f.read()
 
 setup(
     name="searchlight",
     version="0.0.1",
     description="A client to assist in connecting with Searchlight's API",
-    long_description=description,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Dan Goodman",
     author_email="dgoodman@conductor.com",
     url="https://github.com/Conductor/searchlight-api-client-python",

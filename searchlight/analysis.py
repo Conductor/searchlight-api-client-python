@@ -11,6 +11,7 @@ def get_search_df(ss, wpid):
     searches["trackedSearchId"] = searches["trackedSearchId"].astype(int)
     return searches
 
+
 def search_volume(account, date="CURRENT", seasonal=False):
     ss = AccountService(account)
     web_properties = [wp for wp in ss.get_web_properties().json()]
