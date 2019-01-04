@@ -15,4 +15,4 @@ nosetests:
 	@python3 setup.py nosetests
 
 install:
-	@pip install -r requirements.txt
+	@pip3 install -r requirements.txt
