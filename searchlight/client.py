@@ -1,8 +1,10 @@
 import hashlib
 import os
-import requests
 import sys
 import time
+
+import requests
+
 from .utils import week_number
 
 

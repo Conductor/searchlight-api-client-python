@@ -2,6 +2,7 @@ import unittest
 
 from ..client import AccountService
 
+
 class BasicClientTest(unittest.TestCase):
     def test_searchlight_config(self):
         self._ss = AccountService(10550)
@@ -31,6 +32,7 @@ class BasicClientTest(unittest.TestCase):
         res = self._ss.get_ranks(43162, 1)
         self.assertEqual(res.status_code, 200)
         self.assertNotEquals(len(res.json()), 0)
+
 
 if __name__ == "__main__":
     unittest.main()
