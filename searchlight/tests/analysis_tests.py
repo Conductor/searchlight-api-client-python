@@ -5,6 +5,7 @@ import unittest
 
 from ..analysis import search_volume, rank_data
 
+
 class BasicAnalysisTest(unittest.TestCase):
     def test_search_volume(self):
         df = search_volume(10550, "10-03-2018")
@@ -18,6 +19,7 @@ class BasicAnalysisTest(unittest.TestCase):
     def test_ranks(self):
         df = rank_data(10550, "10-03-2018")
         self.assertIsNotNone(df)
+
 
 if __name__ == "__main__":
     unittest.main()
