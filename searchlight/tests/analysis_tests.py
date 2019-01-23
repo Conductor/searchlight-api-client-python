@@ -8,6 +8,8 @@ from ..analysis import search_volume, rank_data
 
 class BasicAnalysisTest(unittest.TestCase):
     def test_search_volume(self):
+        import os
+        print(os.environ)
         df = search_volume(10550, "10-03-2018")
         self.assertIsNotNone(df)
         data_path = os.path.join(os.path.dirname(__file__), "data/search_volume_sample.csv")
