@@ -1,4 +1,4 @@
-.PHONY: help test nosetests intall
+.PHONY: help test nosetests install build-source pypi-upload
 
 help:
 	# Commands
