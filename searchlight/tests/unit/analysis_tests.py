@@ -1,25 +1,44 @@
-import os
 import pandas as pd
-from pandas.util.testing import assert_frame_equal
-import unittest
-
-from searchlight.analysis import search_volume, rank_data
+from unittest import TestCase, main
+from unittest.mock import patch
 
 
-class BasicAnalysisTest(unittest.TestCase):
-    def test_search_volume(self):
-        df = search_volume(10550, "2018-10-03")
+class BasicAnalysisTest(TestCase):
+    @patch("searchlight.analysis.tracked_search_df")
+    def test_tracked_search_df(self, mock_tracked_search_df):
+        mock_tracked_search_df.return_value = pd.DataFrame(
+            data={"deviceId": [1, 1], "isActive": [True, True], "locationId": [1, 1,], "preferredUrl": [None, None],
+                  "queryPhrase": ["sam ash", "music stores"], "rankSourceId": [1, 1],
+                  "trackedSearchId": [7188291, 7188297]}
+        )
+        df = mock_tracked_search_df()
         self.assertIsNotNone(df)
-        data_path = os.path.join(os.path.dirname(__file__), "data/search_volume_sample.csv")
-        df["deviceId"] = df["deviceId"].astype(int)
-        df["rankSourceId"] = df["rankSourceId"].astype(int)
-        df["locationId"] = df["locationId"].astype(int)
-        assert_frame_equal(df, pd.read_csv(data_path))
+        self.assertIsInstance(df, pd.DataFrame)
 
-    def test_ranks(self):
-        df = rank_data(10550, "2018-10-03")
+    @patch("searchlight.analysis.search_volume")
+    def test_search_volume(self, mock_search_volume):
+        mock_search_volume.return_value = pd.DataFrame(
+            data={"deviceId": [1, 1], "isActive": [True, True], "locationId": [1, 1,], "preferredUrl": [None, None],
+                  "queryPhrase": ["sam ash", "music stores"], "rankSourceId": [1, 1],
+                  "trackedSearchId": [7188291, 7188297], "averageVolume": [0, 1000]}
+        )
+        df = mock_search_volume(10550, date="CURRENT", seasonal=False)
         self.assertIsNotNone(df)
+        self.assertIsInstance(df, pd.DataFrame)
+
+    @patch("searchlight.analysis.rank_data")
+    def test_rank_data(self, mock_search_volume):
+        mock_search_volume.return_value = pd.DataFrame(
+            data={"deviceId": [1, 1], "isActive": [True, True], "locationId": [1, 1, ], "preferredUrl": [None, None],
+                  "queryPhrase": ["sam ash", "music stores"], "webPropertyId": [43162, None], "target": [None, None],
+                  "targetDomainName": ["samash.com", "samash.com"], "trueRank": [1, 7], "classicRank": [1, None],
+                  "targetUrl": ["https://www.samash.com", "https://www.samash.com"],
+                  "itemType": ["STANDARD_LINK", "IMAGE_RESULT"]}
+        )
+        df = mock_search_volume(10550, date="CURRENT")
+        self.assertIsNotNone(df)
+        self.assertIsInstance(df, pd.DataFrame)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
