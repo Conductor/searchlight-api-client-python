@@ -11,6 +11,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Dan Goodman",
     author_email="dgoodman@conductor.com",
+    license="LICENSE",
     url="https://github.com/Conductor/searchlight-api-client-python",
     packages=find_packages(exclude=("docs", "searchlight.tests")),
     setup_requires=[

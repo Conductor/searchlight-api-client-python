@@ -35,6 +35,7 @@ class SearchlightService(object):
         self._v3_url = "{base_url}/v3".format(base_url=self._base_url)
 
     def _generate_signature(self):
+        """Generates API signature for request"""
         return hashlib.md5("{key}{secret}{epoch}".format(key=self._api_key, secret=self._api_secret,
                                                          epoch=int(time.time())).encode()).hexdigest()
 
