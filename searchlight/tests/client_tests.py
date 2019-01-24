@@ -1,11 +1,11 @@
 from unittest import TestCase, main
 from unittest.mock import Mock, patch
 
-from searchlight.client import AccountService
+from ..client import AccountService
 
 
 class BasicClientTest(TestCase):
-    
+
     @patch("searchlight.client.requests.get")
     def test_get_locations(self, mock_get):
         self._ss = AccountService(10550)
@@ -38,5 +38,4 @@ class BasicClientTest(TestCase):
     #     self.assertNotEquals(len(res.json()), 0)
 
 
-if __name__ == "__main__":
-    main()
+main()

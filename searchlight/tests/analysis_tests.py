@@ -3,7 +3,7 @@ import pandas as pd
 from pandas.util.testing import assert_frame_equal
 import unittest
 
-from ..analysis import search_volume, rank_data
+from searchlight.analysis import search_volume, rank_data
 
 
 class BasicAnalysisTest(unittest.TestCase):

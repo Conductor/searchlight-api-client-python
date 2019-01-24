@@ -1,7 +1,3 @@
-import datetime
-
-import dateutil
-import pandas as pd
 """
 Copyright 2019 Conductor, Inc.
 
@@ -17,17 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+import pandas as pd
+
 from .client import AccountService
 
 
-def search_df(ss, wpid):
+def tracked_search_df(ss, wpid):
     """Build a data frame from the Tracked Searches endpoint"""
-    searches = ss.get_tracked_searches(wpid).json()
-    if not searches:
+    tracked_searches = ss.get_tracked_searches(wpid).json()
+    if not tracked_searches:
         return
-    searches = pd.DataFrame(searches)
-    searches["trackedSearchId"] = searches["trackedSearchId"].astype(int)
-    return searches
+    tracked_searches = pd.DataFrame(tracked_searches)
+    tracked_searches["trackedSearchId"] = tracked_searches["trackedSearchId"].astype(int)
+    return tracked_searches
 
 
 def monthly_search_volume(msv_df):
@@ -45,7 +43,7 @@ def search_volume(account_id, date="CURRENT", seasonal=False):
     df_list = []
     for wp in web_properties:
         wpid = wp["webPropertyId"]
-        searches = search_df(ss, wpid)
+        tracked_searches = tracked_search_df(ss, wpid)
         rank_sources = [rs["rankSourceId"] for rs in wp["rankSourceInfo"]]
         volumes = []
         for rsid in rank_sources:
@@ -58,7 +56,7 @@ def search_volume(account_id, date="CURRENT", seasonal=False):
         temp = pd.DataFrame(volumes)
         if seasonal:
             temp = monthly_search_volume(temp)
-        df_list.append(pd.merge(temp, pd.DataFrame(searches), how="left", on="trackedSearchId"))
+        df_list.append(pd.merge(temp, pd.DataFrame(tracked_searches), how="left", on="trackedSearchId"))
     if not df_list:
         raise RuntimeError("No volume data found for the given account and date")
     df = pd.concat(df_list, sort=False)  # type: pd.DataFrame
@@ -76,7 +74,7 @@ def rank_data(account_id, date="CURRENT"):
     df_list = []
     for wp in web_properties:
         wpid = wp["webPropertyId"]
-        searches = search_df(ss, wpid)
+        tracked_searches = tracked_search_df(ss, wpid)
         rank_sources = [rs["rankSourceId"] for rs in wp["rankSourceInfo"]]
         rankers = []
         for rsid in rank_sources:
@@ -87,7 +85,7 @@ def rank_data(account_id, date="CURRENT"):
         if not rankers:
             continue
         temp = pd.DataFrame(rankers)
-        df_list.append(pd.merge(temp, searches, how="left", on="trackedSearchId"))
+        df_list.append(pd.merge(temp, tracked_searches, how="left", on="trackedSearchId"))
     if not df_list:
         raise RuntimeError("No rank data found for the given account and date")
     df = pd.concat(df_list, sort=False)  # type: pd.DataFrame
