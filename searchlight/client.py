@@ -23,7 +23,6 @@ class SearchlightService(object):
                                                          epoch=int(time.time())).encode()).hexdigest()
 
     def _make_request(self, url, retry=True, verify=True, allow_redirects=True):
-        time.sleep(0.501)
         url += "?apiKey={key}&sig={sig}".format(key=self._api_key, sig=self._generate_signature())
         try:
             res = self._session.get(url, verify=verify, allow_redirects=allow_redirects)
