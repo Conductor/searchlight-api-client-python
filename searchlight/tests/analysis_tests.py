@@ -8,7 +8,7 @@ from ..analysis import search_volume, rank_data
 
 class BasicAnalysisTest(unittest.TestCase):
     def test_search_volume(self):
-        df = search_volume(10550, "10-03-2018")
+        df = search_volume(10550, "2018-10-03")
         self.assertIsNotNone(df)
         data_path = os.path.join(os.path.dirname(__file__), "data/search_volume_sample.csv")
         df["deviceId"] = df["deviceId"].astype(int)
@@ -17,7 +17,7 @@ class BasicAnalysisTest(unittest.TestCase):
         assert_frame_equal(df, pd.read_csv(data_path))
 
     def test_ranks(self):
-        df = rank_data(10550, "10-03-2018")
+        df = rank_data(10550, "2018-10-03")
         self.assertIsNotNone(df)
 
 

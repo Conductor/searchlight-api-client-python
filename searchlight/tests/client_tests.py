@@ -12,17 +12,13 @@ class BasicClientTest(unittest.TestCase):
 
     def test_account_config(self):
         self._ss = AccountService(10550)
-        res = self._ss.get_account_overview()
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(res.json()["id"], 10550)
         self.assertEqual(self._ss.get_domain_name(43162), "samash.com")
-        res = self._ss.get_searches(43162)
+        res = self._ss.get_tracked_searches(43162)
         self.assertEqual(res.status_code, 200)
         self.assertNotEquals(len(res.json()), 0)
         res = self._ss.get_categories()
         self.assertEqual(res.status_code, 200)
         self.assertNotEquals(len(res.json()), 0)
-        # @todo: analytics testing
 
     def test_data(self):
         self._ss = AccountService(10550)

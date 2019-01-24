@@ -15,8 +15,9 @@ setup(
     packages=find_packages(exclude=("docs", "searchlight.tests")),
     setup_requires=["nose==1.3.7"],
     install_requires=[
-        "simplejson>=3.11.1",
+        "pandas>=0.23.0",
         "requests>=2.19.1",
+        "simplejson>=3.11.1"
     ],
     zip_safe=False,
 )

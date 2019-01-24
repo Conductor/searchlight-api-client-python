@@ -16,7 +16,6 @@ class SearchlightService(object):
         assert self._api_secret, "Searchlight API Secret required"
         self._session = requests.Session()
         self._base_url = "https://searchlight.conductor.com"
-        self._api_url = "{base_url}/api".format(base_url=self._base_url)
         self._v3_url = "{base_url}/v3".format(base_url=self._base_url)
 
     def _generate_signature(self):
@@ -57,17 +56,17 @@ class SearchlightService(object):
         """Returns all supported devices"""
         return self._make_request("{v3_url}/devices".format(v3_url=self._v3_url))
 
+    # Searchlight Account Data
+
+    def get_accounts(self):
+        """Returns all available Searchlight accounts"""
+        return self._make_request("{v3_url}/accounts".format(v3_url=self._v3_url))
 
 class AccountService(SearchlightService):
     def __init__(self, account_id, **kwargs):
         SearchlightService.__init__(self, **kwargs)
         self.account_id = account_id
     # Account Configuration Data
-
-    def get_account_overview(self):
-        """Retrieves account metadata"""
-        return self._make_request("{api_url}/accounts/{acct}".format(api_url=self._api_url,
-                                                                     acct=self.account_id))
 
     def get_web_properties(self):
         """Retrieves account web properties"""
@@ -88,31 +87,15 @@ class AccountService(SearchlightService):
             raise StopIteration("Unable to find any web properties with domain {domain}".format(domain=domain))
         return wps
 
-    def get_searches(self, wpid):
+    def get_tracked_searches(self, wpid):
         """Gets all searches for a given web property"""
         return self._make_request("{v3_url}/accounts/{account}/web-properties/{wpid}/tracked-searches".format(
             v3_url=self._v3_url, account=self.account_id, wpid=wpid))
 
     def get_categories(self):
-        """Returns an account's categories and their rules"""
-        return self._make_request("{api_url}/{acct}/categories".format(api_url=self._api_url,
-                                                                       acct=self.account_id))
-
-    def get_keywords_with_categories(self):
         """Returns categories and their tracked searches"""
         return self._make_request("{v3_url}/accounts/{acct}/categories".format(v3_url=self._v3_url,
-                                                                                  acct=self.account_id))
-
-    def get_segments(self, wpid, rsid):
-        """Returns the content segments and their rules for a given web property and search engine"""
-        return self._make_request("{v3_url}/accounts/{acct}/web-properties/{wpid}/rank-sources/{rsid}/"
-                                  "content-segments".format(v3_url=self._v3_url, acct=self.account_id, wpid=wpid,
-                                                            rsid=rsid))
-
-    def get_analytics_segments(self, wpid, rsid):
-        """Returns segment IDs for analytics"""
-        return self._make_request("{v3_url}/accounts/{acct}/web-properties/{wpid}/rank-sources/{rsid}/segments".format(
-            v3_url=self._v3_url, acct=self.account_id, wpid=wpid, rsid=rsid))
+                                                                               acct=self.account_id))
 
     # Collection Data
 
@@ -128,11 +111,4 @@ class AccountService(SearchlightService):
         tp = week_number(date) if date != "CURRENT" else date
         return self._make_request("{v3_url}/{acct}/web-properties/{wpid}/rank-sources/{rsid}/tp/{tp}/"
                                   "search-volumes".format(v3_url=self._v3_url, acct=self.account_id, wpid=wpid,
-                                                          rsid=rsid, tp=tp))
-
-    def get_analytics(self, wpid, rsid, date="CURRENT"):
-        """Gets volume for searches tracked in a given web property and search engine on the given date"""
-        tp = week_number(date) if date != "CURRENT" else date
-        return self._make_request("{v3_url}/{acct}/web-properties/{wpid}/rank-sources/{rsid}/tp/{tp}/"
-                                  "analytics-urls".format(v3_url=self._v3_url, acct=self.account_id, wpid=wpid,
                                                           rsid=rsid, tp=tp))
