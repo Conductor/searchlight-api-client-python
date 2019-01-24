@@ -1,7 +1,7 @@
 from unittest import TestCase, main
 from unittest.mock import Mock, patch
 
-from ..client import SearchlightService, AccountService
+from searchlight.client import SearchlightService, AccountService
 
 
 class BasicSearchlightServiceUnitTest(TestCase):
