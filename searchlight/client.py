@@ -23,19 +23,35 @@ import simplejson as json
 import requests
 
 from .utils import week_number
+from .errors import CredentialsMissingError
 
 
 class SearchlightService(object):
     def __init__(self, **kwargs):
         self._api_key = kwargs.get(
             "api_key",
-            os.getenv("SEARCHLIGHT_API_KEY"))
-
-        assert self._api_key, "Searchlight API key required"
+            os.getenv("SEARCHLIGHT_API_KEY")
+        )
+        if not self._api_key:
+            raise CredentialsMissingError(
+                "Searchlight API key required. If you have one "
+                "either add it to environment as SEARCHLIGHT_API_KEY "
+                "or pass it as the api_key parameter. If you do"
+                " not have one you can request one here: "
+                "http://developers.conductor.com/"
+            )
         self._secret = kwargs.get(
             "secret",
             os.getenv("SEARCHLIGHT_SHARED_SECRET")
         )
+        if not self._session:
+            raise CredentialsMissingError(
+                "Searchlight Shared Secret required. If you have one "
+                "either add it to environment as SEARCHlIGHT_SHARED_SECRET "
+                "or pass it as the secret parameter. If you do"
+                " not have one you can request one here: "
+                "http://developers.conductor.com/"
+            )
         assert self._secret, "Searchlight API Secret required"
         self._session = requests.Session()
         self._base_url = "https://searchlight.conductor.com"
@@ -43,10 +59,13 @@ class SearchlightService(object):
 
     def _generate_signature(self):
         """Generates API signature for request"""
-        hash = hashlib.md5("{key}{secret}{epoch}".format(
-            key=self._api_key, secret=self._secret,
-            epoch=int(time.time())))
-        return hash.encode().hexdigest()
+        h = hashlib.md5("{key}{secret}{epoch}".format(
+                key=self._api_key,
+                secret=self._secret,
+                epoch=int(time.time())
+            )
+        )
+        return h.encode().hexdigest()
 
     def _make_request(self, url, retry=True, verify=True, redirects=True):
         url += "?apiKey={key}&sig={sig}".format(
