@@ -6,7 +6,7 @@ with open("README.md") as f:
 setup(
     name="searchlight",
     version="0.0.1",
-    description="A client to assist in connecting with Searchlight's API",
+    description="A client to assist in connecting with the Conductor Searchlight API",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Dan Goodman",
