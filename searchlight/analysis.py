@@ -20,7 +20,7 @@ from .client import AccountService
 
 def tracked_search_df(ss, wpid):
     """Build a data frame from the Tracked Searches endpoint"""
-    tracked_searches = ss.get_tracked_searches(wpid).json()
+    tracked_searches = ss.get_tracked_searches(wpid)
     if not tracked_searches:
         return
     tracked_searches = pd.DataFrame(tracked_searches)
@@ -39,7 +39,7 @@ def search_volume(account_id, date="CURRENT", seasonal=False):
     """Build a search volume data frame for a given date for all tracked searches
     in an account across rank sources and web properties"""
     ss = AccountService(account_id)
-    web_properties = [wp for wp in ss.get_web_properties().json()]
+    web_properties = [wp for wp in ss.get_web_properties()]
     df_list = []
     for wp in web_properties:
         wpid = wp["webPropertyId"]
@@ -47,7 +47,7 @@ def search_volume(account_id, date="CURRENT", seasonal=False):
         rank_sources = [rs["rankSourceId"] for rs in wp["rankSourceInfo"]]
         volumes = []
         for rsid in rank_sources:
-            msv = ss.get_volume(wpid, rsid, date).json()
+            msv = ss.get_volume(wpid, rsid, date)
             if not msv:
                 continue
             volumes.extend(msv)
@@ -70,7 +70,7 @@ def rank_data(account_id, date="CURRENT"):
     """Build a data frame for all ranks in a given date for all tracked searches
     in an account across rank sources and web properties"""
     ss = AccountService(account_id)
-    web_properties = [wp for wp in ss.get_web_properties().json()]
+    web_properties = [wp for wp in ss.get_web_properties()]
     df_list = []
     for wp in web_properties:
         wpid = wp["webPropertyId"]
@@ -78,7 +78,7 @@ def rank_data(account_id, date="CURRENT"):
         rank_sources = [rs["rankSourceId"] for rs in wp["rankSourceInfo"]]
         rankers = []
         for rsid in rank_sources:
-            ranks = ss.get_ranks(wpid, rsid, date).json()
+            ranks = ss.get_ranks(wpid, rsid, date)
             if not ranks:
                 continue
             rankers.extend(ranks)

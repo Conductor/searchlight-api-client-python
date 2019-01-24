@@ -18,6 +18,7 @@ import hashlib
 import os
 import sys
 import time
+import simplejson as json
 
 import requests
 
@@ -43,20 +44,20 @@ class SearchlightService(object):
         url += "?apiKey={key}&sig={sig}".format(key=self._api_key, sig=self._generate_signature())
         try:
             res = self._session.get(url, verify=verify, allow_redirects=allow_redirects)
+            if res.raise_for_status():
+                if retry:
+                    print("Status Code: {status_code}. Retrying".format(status_code=res.status_code))
+                    return self._make_request(url, retry=False)
+                else:
+                    return print("{url} failed to respond".format(url=url))
+            data = res.json()
         except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError) as e:
-            print("Error connecting to Searchlight : {error}".format(error=e))
-            return
+            return print("Error connecting to Searchlight : {error}".format(error=e))
+        except json.JSONDecodeError:
+            return print("Unable to decode response from server")
         except requests.exceptions.ChunkedEncodingError:
-            print("Searchlight response delayed, skipping retrieval..: {info}".format(info=sys.exc_info()[0]))
-            return
-        if res.raise_for_status():
-            if retry:
-                print("Status Code: {status_code}. Retrying".format(status_code=res.status_code))
-                return self._make_request(url, retry=False)
-            else:
-                print("{url} failed to respond".format(url=url))
-                return
-        return res
+            return print("Searchlight response delayed, skipping retrieval..: {info}".format(info=sys.exc_info()[0]))
+        return data
 
     # Searchlight Configuration Data
 
@@ -77,6 +78,7 @@ class SearchlightService(object):
     def get_accounts(self):
         """Returns all available Searchlight accounts"""
         return self._make_request("{v3_url}/accounts".format(v3_url=self._v3_url))
+
 
 class AccountService(SearchlightService):
     def __init__(self, account_id, **kwargs):
