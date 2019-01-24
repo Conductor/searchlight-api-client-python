@@ -36,7 +36,7 @@ class SearchlightService(object):
             return
         if res.raise_for_status():
             if retry:
-                print("Status Code: {status}. Retrying", res.status_code)
+                print("Status Code: {status_code}. Retrying".format(status_code=res.status_code))
                 return self._make_request(url, retry=False)
             else:
                 print("{url} failed to respond".format(url=url))
