@@ -1,7 +1,5 @@
 from unittest import TestCase, main
-from unittest.mock import Mock, patch
-
-from searchlight.client import SearchlightService, AccountService
+from unittest.mock import patch
 
 
 class BasicSearchlightServiceUnitTest(TestCase):
@@ -120,15 +118,15 @@ class BasicAccountServiceUnitTest(TestCase):
     @patch("searchlight.client.AccountService")
     def test_get_ranks(self, MockAccountServices):
         ss = MockAccountServices()
-        ss.get_ranks.return_value = [
-            {'ranks': {'UNIVERSAL_RANK': None, 'TRUE_RANK': 6, 'CLASSIC_RANK': 3},
-             'webPropertyId': 43162,
-             'trackedSearchId': 7188291,
-             'itemType': 'ANSWER_BOX',
-             'target': '',
-             'targetDomainName': 'samash.com',
-             'targetUrl': 'https://www.samash.com/help/payment-methods'}
-        ]
+        ss.get_ranks.return_value = [{
+            'ranks': {'UNIVERSAL_RANK': None, 'TRUE_RANK': 6, 'CLASSIC_RANK': 3},
+            'webPropertyId': 43162,
+            'trackedSearchId': 7188291,
+            'itemType': 'ANSWER_BOX',
+            'target': '',
+            'targetDomainName': 'samash.com',
+            'targetUrl': 'https://www.samash.com/help/payment-methods'
+        }]
         data = ss.get_ranks(43162, 1, "CURRENT")
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)

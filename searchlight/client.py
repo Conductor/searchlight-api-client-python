@@ -25,6 +25,8 @@ import requests
 from .utils import week_number
 from .errors import CredentialsMissingError
 
+API_BASE_URL = "https://searchlight.conductor.com"
+
 
 class SearchlightService(object):
     def __init__(self, **kwargs):
@@ -44,7 +46,7 @@ class SearchlightService(object):
             "secret",
             os.getenv("SEARCHLIGHT_SHARED_SECRET")
         )
-        if not self._session:
+        if not self._secret:
             raise CredentialsMissingError(
                 "Searchlight Shared Secret required. If you have one "
                 "either add it to environment as SEARCHlIGHT_SHARED_SECRET "
@@ -52,26 +54,25 @@ class SearchlightService(object):
                 " not have one you can request one here: "
                 "http://developers.conductor.com/"
             )
-        assert self._secret, "Searchlight API Secret required"
         self._session = requests.Session()
-        self._base_url = "https://searchlight.conductor.com"
+        self._base_url = API_BASE_URL
         self._v3_url = "{base_url}/v3".format(base_url=self._base_url)
 
     def _generate_signature(self):
         """Generates API signature for request"""
-        h = hashlib.md5("{key}{secret}{epoch}".format(
+        return hashlib.md5(
+            "{key}{secret}{epoch}".format(
                 key=self._api_key,
                 secret=self._secret,
                 epoch=int(time.time())
-            )
-        )
-        return h.encode().hexdigest()
+            ).encode()
+        ).hexdigest()
 
     def _make_request(self, url, retry=True, verify=True, redirects=True):
         url += "?apiKey={key}&sig={sig}".format(
             key=self._api_key, sig=self._generate_signature())
         try:
-            res = self._session.get(url, verify=verify, redirects=redirects)
+            res = self._session.get(url, verify=verify, allow_redirects=redirects)
             if res.raise_for_status():
                 if retry:
                     print("Status Code: {status_code}. Retrying".format(
