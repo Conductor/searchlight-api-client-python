@@ -11,10 +11,10 @@ help:
 
 test: nosetests
 
-pypi-upload
+pypi-upload:
     twine upload dist/*
 
-build-source
+build-source:
     @python3 setup.py sdist
 
 nosetests:
