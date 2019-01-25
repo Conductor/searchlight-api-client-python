@@ -121,13 +121,13 @@ class TestMockServer(object):
         start_mock_server(cls.mock_server_port)
 
     def test_get_locations(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = SearchlightService()
             locations = ss.get_locations()
         assert_list_equal(locations, [{"locationId": "1", "description": "United States"}])
 
     def test_get_engines(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = SearchlightService()
             engines = ss.get_engines()
         assert_list_equal(engines, [{
@@ -138,7 +138,7 @@ class TestMockServer(object):
         }])
 
     def test_get_devices(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = SearchlightService()
             devices = ss.get_devices()
         assert_list_equal(devices, [{
@@ -148,7 +148,7 @@ class TestMockServer(object):
         }])
 
     def test_get_accounts(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = SearchlightService()
             accounts = ss.get_accounts()
         assert_list_equal(accounts, [{
@@ -159,7 +159,7 @@ class TestMockServer(object):
         }])
 
     def test_get_web_properties(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             account_service = AccountService(10550)
             web_properties = account_service.get_web_properties()
         assert_list_equal(web_properties, [{
@@ -171,7 +171,7 @@ class TestMockServer(object):
         }])
 
     def test_get_tracked_searches(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = AccountService(10550)
             tracked_searches = ss.get_tracked_searches(43162)
         assert_list_equal(tracked_searches, [{
@@ -185,7 +185,7 @@ class TestMockServer(object):
         }])
 
     def test_get_categories(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = AccountService(10550)
             categories = ss.get_categories()
         assert_list_equal(categories, [{
@@ -196,7 +196,7 @@ class TestMockServer(object):
         }])
 
     def test_get_ranks(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = AccountService(10550)
             ranks = ss.get_ranks(43162, 1, "CURRENT")
         assert_list_equal(ranks, [{
@@ -210,7 +210,7 @@ class TestMockServer(object):
         }])
 
     def test_get_volume(self):
-        with patch.dict("searchlight.client.__dict__", {"API_BASE_URL": self.mock_url}):
+        with patch.dict("searchlight_sdk.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = AccountService(10550)
             volume = ss.get_volume(43162, 1, "CURRENT")
         assert_list_equal(volume, [{

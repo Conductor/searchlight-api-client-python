@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 
 class BasicAnalysisTest(TestCase):
-    @patch("searchlight.analysis.tracked_search_df")
+    @patch("searchlight_sdk.analysis.tracked_search_df")
     def test_tracked_search_df(self, mock_tracked_search_df):
         mock_tracked_search_df.return_value = pd.DataFrame(
             data={"deviceId": [1, 1], "isActive": [True, True], "locationId": [1, 1,], "preferredUrl": [None, None],
@@ -15,7 +15,7 @@ class BasicAnalysisTest(TestCase):
         self.assertIsNotNone(df)
         self.assertIsInstance(df, pd.DataFrame)
 
-    @patch("searchlight.analysis.search_volume")
+    @patch("searchlight_sdk.analysis.search_volume")
     def test_search_volume(self, mock_search_volume):
         mock_search_volume.return_value = pd.DataFrame(
             data={"deviceId": [1, 1], "isActive": [True, True], "locationId": [1, 1,], "preferredUrl": [None, None],
@@ -26,7 +26,7 @@ class BasicAnalysisTest(TestCase):
         self.assertIsNotNone(df)
         self.assertIsInstance(df, pd.DataFrame)
 
-    @patch("searchlight.analysis.rank_data")
+    @patch("searchlight_sdk.analysis.rank_data")
     def test_rank_data(self, mock_search_volume):
         mock_search_volume.return_value = pd.DataFrame(
             data={"deviceId": [1, 1], "isActive": [True, True], "locationId": [1, 1, ], "preferredUrl": [None, None],

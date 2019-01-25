@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 class BasicSearchlightServiceUnitTest(TestCase):
 
-    @patch("searchlight.client.SearchlightService")
+    @patch("searchlight_sdk.client.SearchlightService")
     def test_get_locations(self, MockSearchlightService):
         ss = MockSearchlightService()
         ss.get_locations.return_value = [{
@@ -15,7 +15,7 @@ class BasicSearchlightServiceUnitTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight.client.SearchlightService")
+    @patch("searchlight_sdk.client.SearchlightService")
     def test_get_engines(self, MockSearchlightService):
         ss = MockSearchlightService()
         ss.get_engines.return_value = [{
@@ -28,7 +28,7 @@ class BasicSearchlightServiceUnitTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight.client.SearchlightService")
+    @patch("searchlight_sdk.client.SearchlightService")
     def test_get_devices(self, MockSearchlightService):
         ss = MockSearchlightService()
         ss.get_devices.return_value = [{
@@ -40,7 +40,7 @@ class BasicSearchlightServiceUnitTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight.client.SearchlightService")
+    @patch("searchlight_sdk.client.SearchlightService")
     def test_get_accounts(self, MockSearchlightService):
         ss = MockSearchlightService()
         ss.get_accounts.return_value = [{
@@ -56,7 +56,7 @@ class BasicSearchlightServiceUnitTest(TestCase):
 
 class BasicAccountServiceUnitTest(TestCase):
 
-    @patch("searchlight.client.AccountService")
+    @patch("searchlight_sdk.client.AccountService")
     def test_get_web_properties(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_web_properties.return_value = [{
@@ -70,7 +70,7 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight.client.AccountService")
+    @patch("searchlight_sdk.client.AccountService")
     def test_get_domain_name(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_domain_name.return_value = "samash.com"
@@ -78,7 +78,7 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsNotNone(domain_name)
         self.assertIsInstance(domain_name, str)
 
-    @patch("searchlight.client.AccountService")
+    @patch("searchlight_sdk.client.AccountService")
     def test_get_web_properties_for_domain(self, MockAccountServices):
         ss = MockAccountServices()
         ss.et_web_properties_for_domain.return_value = [43162]
@@ -86,7 +86,7 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsNotNone(wps)
         self.assertIsInstance(wps[0], int)
 
-    @patch("searchlight.client.AccountService")
+    @patch("searchlight_sdk.client.AccountService")
     def test_get_tracked_searches(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_tracked_searches.return_value = [{
@@ -102,7 +102,7 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight.client.AccountService")
+    @patch("searchlight_sdk.client.AccountService")
     def test_get_categories(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_categories.return_value = [{
@@ -115,7 +115,7 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight.client.AccountService")
+    @patch("searchlight_sdk.client.AccountService")
     def test_get_ranks(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_ranks.return_value = [{
@@ -131,7 +131,7 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight.client.AccountService")
+    @patch("searchlight_sdk.client.AccountService")
     def test_get_volume(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_volume.return_value = [{
