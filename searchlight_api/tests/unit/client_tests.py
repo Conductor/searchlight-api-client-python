@@ -19,10 +19,10 @@ class BasicSearchlightServiceUnitTest(TestCase):
     def test_get_engines(self, MockSearchlightService):
         ss = MockSearchlightService()
         ss.get_engines.return_value = [{
-            'baseDomain': 'google.com',
-            'description': 'Google (US / English)',
-            'rankSourceId': '1',
-            'name': 'GOOGLE_EN_US'
+            "baseDomain": "google.com",
+            "description": "Google (US / English)",
+            "rankSourceId": "1",
+            "name": "GOOGLE_EN_US"
         }]
         data = ss.get_engines()
         self.assertIsNotNone(data)
@@ -60,11 +60,11 @@ class BasicAccountServiceUnitTest(TestCase):
     def test_get_web_properties(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_web_properties.return_value = [{
-            'isActive': True,
-            'rankSourceInfo': [],
-            'webPropertyId': '43162',
-            'trackedSearchList': 'https://api.conductor.com/v3/accounts/10550/web-properties/43162/tracked-searches',
-            'name': 'conductor.com'
+            "isActive": True,
+            "rankSourceInfo": [],
+            "webPropertyId": "43162",
+            "trackedSearchList": "https://api.conductor.com/v3/accounts/10550/web-properties/43162/tracked-searches",
+            "name": "conductor.com"
         }]
         data = ss.get_web_properties()
         self.assertIsNotNone(data)
@@ -90,13 +90,13 @@ class BasicAccountServiceUnitTest(TestCase):
     def test_get_tracked_searches(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_tracked_searches.return_value = [{
-            'isActive': True,
-            'trackedSearchId': '7188291',
-            'preferredUrl': 'http://www.conductor.com/',
-            'queryPhrase': 'conductor',
-            'locationId': '1',
-            'rankSourceId': '1',
-            'deviceId': '1'
+            "isActive": True,
+            "trackedSearchId": "7188291",
+            "preferredUrl": "http://www.conductor.com/",
+            "queryPhrase": "conductor",
+            "locationId": "1",
+            "rankSourceId": "1",
+            "deviceId": "1"
         }]
         data = ss.get_tracked_searches(43162)
         self.assertIsNotNone(data)
@@ -106,10 +106,10 @@ class BasicAccountServiceUnitTest(TestCase):
     def test_get_categories(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_categories.return_value = [{
-            'created': '2018-02-12T13:53:46.000Z',
-            'trackedSearchIds': [],
-            'modified': '2018-02-12T13:53:46.000Z',
-            'name': 'Intent - Early - Why'
+            "created": "2018-02-12T13:53:46.000Z",
+            "trackedSearchIds": [],
+            "modified": "2018-02-12T13:53:46.000Z",
+            "name": "Intent - Early - Why"
         }]
         data = ss.get_categories()
         self.assertIsNotNone(data)
@@ -119,13 +119,13 @@ class BasicAccountServiceUnitTest(TestCase):
     def test_get_ranks(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_ranks.return_value = [{
-            'ranks': {'UNIVERSAL_RANK': None, 'TRUE_RANK': 6, 'CLASSIC_RANK': 3},
-            'webPropertyId': 43162,
-            'trackedSearchId': 7188291,
-            'itemType': 'ANSWER_BOX',
-            'target': '',
-            'targetDomainName': 'conductor.com',
-            'targetUrl': 'https://www.conductor.com/blog'
+            "ranks": {"UNIVERSAL_RANK": None, "TRUE_RANK": 6, "CLASSIC_RANK": 3},
+            "webPropertyId": 43162,
+            "trackedSearchId": 7188291,
+            "itemType": "ANSWER_BOX",
+            "target": "",
+            "targetDomainName": "conductor.com",
+            "targetUrl": "https://www.conductor.com/blog"
         }]
         data = ss.get_ranks(43162, 1, "CURRENT")
         self.assertIsNotNone(data)
@@ -135,9 +135,9 @@ class BasicAccountServiceUnitTest(TestCase):
     def test_get_volume(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_volume.return_value = [{
-            'averageVolume': 135000,
-            'trackedSearchId': 7188291,
-            'volumeItems': []
+            "averageVolume": 135000,
+            "trackedSearchId": 7188291,
+            "volumeItems": []
         }]
         data = ss.get_volume(43162, 1, "CURRENT")
         self.assertIsNotNone(data)
