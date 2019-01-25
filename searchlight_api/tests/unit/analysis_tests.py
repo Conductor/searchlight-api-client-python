@@ -37,7 +37,7 @@ class BasicAnalysisTest(TestCase):
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
-    @patch("searchlight_api.analysis.all_tracked_searchews")
+    @patch("searchlight_api.analysis.all_tracked_searches")
     def test_all_tracked_searches(self, mock_all_tracked_searches):
         mock_all_tracked_searches.return_value = [{
             "deviceId": "1",
