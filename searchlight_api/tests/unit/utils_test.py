@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from searchlight_sdk.utils import week_number
+from searchlight_api.utils import week_number
 
 
 class BasicUtilsTest(TestCase):

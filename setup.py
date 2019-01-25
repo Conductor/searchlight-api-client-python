@@ -4,7 +4,7 @@ with open("README.md") as f:
     long_description = f.read()
 
 setup(
-    name="searchlight",
+    name="searchlight_api",
     version="0.0.1",
     description="A client to assist in connecting with the Conductor Searchlight API",
     long_description=long_description,
@@ -13,7 +13,7 @@ setup(
     author_email="dgoodman@conductor.com",
     license="LICENSE",
     url="https://github.com/Conductor/searchlight-api-client-python",
-    packages=find_packages(exclude=("docs", "searchlight.tests")),
+    packages=find_packages(exclude=("docs", "searchlight_api.tests")),
     setup_requires=[
         "nose==1.3.7",
         "twine==1.12.1"
