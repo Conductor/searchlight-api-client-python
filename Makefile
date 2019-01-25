@@ -13,7 +13,7 @@ help:
 	# make upload                         - Uploads package to pypi
 
 test:
-    @python3 setup.py nosetests
+	@python3 setup.py nosetests
 
 upload:
 	twine upload dist/*
