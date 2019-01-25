@@ -64,7 +64,7 @@ class BasicAccountServiceUnitTest(TestCase):
             'rankSourceInfo': [],
             'webPropertyId': '43162',
             'trackedSearchList': 'https://api.conductor.com/v3/accounts/10550/web-properties/43162/tracked-searches',
-            'name': 'samash.com'
+            'name': 'conductor.com'
         }]
         data = ss.get_web_properties()
         self.assertIsNotNone(data)
@@ -73,7 +73,7 @@ class BasicAccountServiceUnitTest(TestCase):
     @patch("searchlight_api.client.AccountService")
     def test_get_domain_name(self, MockAccountServices):
         ss = MockAccountServices()
-        ss.get_domain_name.return_value = "samash.com"
+        ss.get_domain_name.return_value = "conductor.com"
         domain_name = ss.get_domain_name(43162)
         self.assertIsNotNone(domain_name)
         self.assertIsInstance(domain_name, str)
@@ -92,8 +92,8 @@ class BasicAccountServiceUnitTest(TestCase):
         ss.get_tracked_searches.return_value = [{
             'isActive': True,
             'trackedSearchId': '7188291',
-            'preferredUrl': 'http://www.samash.com/',
-            'queryPhrase': 'sam ash',
+            'preferredUrl': 'http://www.conductor.com/',
+            'queryPhrase': 'conductor',
             'locationId': '1',
             'rankSourceId': '1',
             'deviceId': '1'
@@ -124,8 +124,8 @@ class BasicAccountServiceUnitTest(TestCase):
             'trackedSearchId': 7188291,
             'itemType': 'ANSWER_BOX',
             'target': '',
-            'targetDomainName': 'samash.com',
-            'targetUrl': 'https://www.samash.com/help/payment-methods'
+            'targetDomainName': 'conductor.com',
+            'targetUrl': 'https://www.conductor.com/blog'
         }]
         data = ss.get_ranks(43162, 1, "CURRENT")
         self.assertIsNotNone(data)

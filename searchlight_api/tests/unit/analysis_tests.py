@@ -22,10 +22,10 @@ class BasicAnalysisTest(TestCase):
         mock_search_volume.return_value = [{
             "webPropertyId": 43162,
             "target": "",
-            "targetDomainName": "samash.com",
+            "targetDomainName": "conductor.com",
             "trueRank": 1,
             "classicRank": 1,
-            "targetUrl": "https://www.samash.com",
+            "targetUrl": "https://www.conductor.com",
             "itemType": "STANDARD_LINK",
         }]
         data = mock_search_volume(10550, date="CURRENT")
