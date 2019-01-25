@@ -7,7 +7,7 @@ from nose.tools import assert_list_equal
 import simplejson as json
 import requests
 
-from searchlight.client import AccountService, SearchlightService
+from searchlight_sdk.client import AccountService, SearchlightService
 
 
 class MockServerRequestHandler(BaseHTTPRequestHandler):
