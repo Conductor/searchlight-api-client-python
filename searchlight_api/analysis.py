@@ -49,6 +49,9 @@ def rank_data(account_id, date="CURRENT"):
             if not ranks:
                 continue
             for r in ranks:
-                r.update({"rankSourceId": rsid})
+                r.update({"rankSourceId": rsid,
+                          "standardRank": r["ranks"]["CLASSIC_RANK"],
+                          "trueRank": r["ranks"]["TRUE_RANK"]})
+                r.pop("ranks", None)
             ranks_list.extend(ranks)
     return ranks_list
