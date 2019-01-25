@@ -52,15 +52,15 @@ class MockServerRequestHandler(BaseHTTPRequestHandler):
                     "webPropertyId": "43162",
                     "trackedSearchList": "https://api.conductor.com/v3/accounts/10550/web-properties/43162/"
                                          "tracked-searches",
-                    "name": "samash.com"
+                    "name": "conductor.com"
                 }]
             )
         elif "/tracked-searches?apiKey" in self.path:
             response_content = json.dumps([{
                     "isActive": True,
                     "trackedSearchId": "7188291",
-                    "preferredUrl": "http://www.samash.com/",
-                    "queryPhrase": "sam ash",
+                    "preferredUrl": "http://www.conductor.com/",
+                    "queryPhrase": "conductor",
                     "locationId": "1",
                     "rankSourceId": "1",
                     "deviceId": "1"
@@ -81,8 +81,8 @@ class MockServerRequestHandler(BaseHTTPRequestHandler):
                     "trackedSearchId": 7188291,
                     "itemType": "ANSWER_BOX",
                     "target": "",
-                    "targetDomainName": "samash.com",
-                    "targetUrl": "https://www.samash.com/help/payment-methods"
+                    "targetDomainName": "conductor.com",
+                    "targetUrl": "https://www.conductor.com/blog"
                 }]
             )
         elif "/search-volumes?apiKey" in self.path:
