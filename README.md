@@ -129,6 +129,9 @@ rank_source_df = pd.DataFrame(account_service.get_rank_sources())
 location_df = pd.DataFrame(account_service.get_locations())
 device_df = pd.DataFrame(account_service.get_devices())
 
+# get the tracked searches and turn into a df
+tracked_search_df = pd.DataFrame(analysis.all_tracked_searches(account_service))
+
 # turn search_volume and rank_data to Data Frames
 search_volume_df = pd.DataFrame(analysis.search_volume(account_service))
 rank_data_df = pd.DataFrame(analysis.rank_data(account_service))
@@ -160,10 +163,16 @@ print(report.head())
 2  [{'volume': 165000, 'month': 11, 'year': 2018}...  google.com
 3  [{'volume': 165000, 'month': 11, 'year': 2018}...  google.com
 4  [{'volume': 165000, 'month': 11, 'year': 2018}...  google.com
-             description          name
-0  Google (US / English)  GOOGLE_EN_US
-1  Google (US / English)  GOOGLE_EN_US
-2  Google (US / English)  GOOGLE_EN_US
-3  Google (US / English)  GOOGLE_EN_US
-4  Google (US / English)  GOOGLE_EN_US
+             description          name deviceId  isActive locationId  \
+0  Google (US / English)  GOOGLE_EN_US        1      True          1
+1  Google (US / English)  GOOGLE_EN_US        1      True          1
+2  Google (US / English)  GOOGLE_EN_US        1      True          1
+3  Google (US / English)  GOOGLE_EN_US        1      True          1
+4  Google (US / English)  GOOGLE_EN_US        1      True          1
+             preferredUrl queryPhrase
+0  http://www.example.com/     example phrase
+1  http://www.example.com/     example phrase
+2  http://www.example.com/     example phrase
+3  http://www.example.com/     example phrase
+4  http://www.example.com/     example phrase
 ```

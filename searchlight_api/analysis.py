@@ -54,3 +54,19 @@ def rank_data(account_service, date="CURRENT"):
                 r.pop("ranks", None)
             ranks_list.extend(ranks)
     return ranks_list
+
+
+def all_tracked_searches(account_service):
+    web_properties = [wp for wp in account_service.get_web_properties()]
+    tracked_search_list = []
+    for wp in web_properties:
+        wpid = wp["webPropertyId"]
+
+        tracked_searches = account_service.get_tracked_searches(wpid)
+        if not tracked_searches:
+            continue
+        for ts in tracked_searches:
+            ts["trackedSearchId"] = int(ts["trackedSearchId"])
+            ts.update({"webPropertyId": wpid})
+        tracked_search_list.extend(tracked_searches)
+    return tracked_search_list
