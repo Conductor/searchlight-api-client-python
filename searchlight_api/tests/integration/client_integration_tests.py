@@ -137,11 +137,11 @@ class TestMockServer(object):
             "description": "United States"}
         ])
 
-    def test_get_engines(self):
+    def test_get_rank_sources(self):
         with patch.dict("searchlight_api.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = SearchlightService()
-            engines = ss.get_engines()
-        assert_list_equal(engines, [{
+            rank_sources = ss.get_rank_sources()
+        assert_list_equal(rank_sources, [{
                     "baseDomain": "google.com",
                     "description": "Google (US / English)",
                     "rankSourceId": "1",

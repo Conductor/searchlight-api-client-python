@@ -19,7 +19,6 @@ setup(
         "twine==1.12.1"
     ],
     install_requires=[
-        "pandas>=0.23.0",
         "requests>=2.19.1",
         "simplejson>=3.11.1"
     ],

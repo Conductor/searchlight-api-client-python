@@ -107,8 +107,8 @@ class SearchlightService(object):
             )
         )
 
-    def get_engines(self):
-        """Returns all supported engines"""
+    def get_rank_sources(self):
+        """Returns all supported rank sources"""
         return self._make_request(
             "{v3_url}/rank-sources".format(
                 v3_url=self._v3_url
@@ -152,7 +152,7 @@ class AccountService(SearchlightService):
     def get_domain_name(self, wpid):
         """Retrieves the domain name for a given web property"""
         try:
-            return next(wp["name"] for wp in self.get_web_properties().json()
+            return next(wp["name"] for wp in self.get_web_properties()
                         if wp["webPropertyId"] == str(wpid))
         except StopIteration:
             raise StopIteration(
@@ -163,8 +163,8 @@ class AccountService(SearchlightService):
 
     def get_web_properties_for_domain(self, domain):
         """Retrieves the web property IDs associated with a given domain"""
-        wps = [wp["webPropertyId"] for wp in self.get_web_properties().json()
-               if wp["domain"] == domain]
+        wps = [wp["webPropertyId"] for wp in self.get_web_properties()
+               if wp["name"] == domain]
         if not wps:
             raise StopIteration(
                 "Unable to find any web property for domain {domain}".format(
@@ -196,7 +196,7 @@ class AccountService(SearchlightService):
     # Collection Data
 
     def get_ranks(self, wpid, rsid, date="CURRENT"):
-        """Ranks for searches in a web property and engine for a date"""
+        """Ranks for searches in a web property and rank source for a date"""
         tp = week_number(date) if date != "CURRENT" else date
         return self._make_request(
             "{v3_url}/{acct}/web-properties/{wpid}/rank-sources/{rsid}/"
@@ -210,7 +210,7 @@ class AccountService(SearchlightService):
         )
 
     def get_volume(self, wpid, rsid, date="CURRENT"):
-        """Volume for searches in a web property and engine for a date"""
+        """Volume for searches in a web property and rank source for a date"""
         tp = week_number(date) if date != "CURRENT" else date
         return self._make_request(
             "{v3_url}/{acct}/web-properties/{wpid}/rank-sources/{rsid}/"

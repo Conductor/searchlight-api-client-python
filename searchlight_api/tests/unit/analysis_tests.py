@@ -1,6 +1,8 @@
 from unittest import TestCase, main
 from unittest.mock import patch
 
+from searchlight_api.client import AccountService
+
 
 class BasicAnalysisTest(TestCase):
 
@@ -13,13 +15,15 @@ class BasicAnalysisTest(TestCase):
             "volumeItems": [],
             "webPropertyId": 100
         }]
-        data = mock_search_volume(10550, date="CURRENT")
+        account_service = AccountService(10550)
+        data = mock_search_volume(account_service, date="CURRENT")
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
     @patch("searchlight_api.analysis.rank_data")
     def test_rank_data(self, mock_search_volume):
         mock_search_volume.return_value = [{
+            "targetWebPropertyId": 43162,
             "webPropertyId": 43162,
             "target": "",
             "targetDomainName": "conductor.com",
@@ -28,7 +32,8 @@ class BasicAnalysisTest(TestCase):
             "targetUrl": "https://www.conductor.com",
             "itemType": "STANDARD_LINK",
         }]
-        data = mock_search_volume(10550, date="CURRENT")
+        account_service = AccountService(10550)
+        data = mock_search_volume(account_service, date="CURRENT")
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 

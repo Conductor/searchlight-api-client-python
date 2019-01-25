@@ -16,15 +16,15 @@ class BasicSearchlightServiceUnitTest(TestCase):
         self.assertIsInstance(data[0], dict)
 
     @patch("searchlight_api.client.SearchlightService")
-    def test_get_engines(self, MockSearchlightService):
+    def test_get_rank_sources(self, MockSearchlightService):
         ss = MockSearchlightService()
-        ss.get_engines.return_value = [{
+        ss.get_rank_sources.return_value = [{
             "baseDomain": "google.com",
             "description": "Google (US / English)",
             "rankSourceId": "1",
             "name": "GOOGLE_EN_US"
         }]
-        data = ss.get_engines()
+        data = ss.get_rank_sources()
         self.assertIsNotNone(data)
         self.assertIsInstance(data[0], dict)
 
