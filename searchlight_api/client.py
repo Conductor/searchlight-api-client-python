@@ -72,7 +72,11 @@ class SearchlightService(object):
         url += "?apiKey={key}&sig={sig}".format(
             key=self._api_key, sig=self._generate_signature())
         try:
-            res = self._session.get(url, verify=verify, allow_redirects=redirects)
+            res = self._session.get(
+                url,
+                verify=verify,
+                allow_redirects=redirects
+            )
             if res.raise_for_status():
                 if retry:
                     print("Status Code: {status_code}. Retrying".format(

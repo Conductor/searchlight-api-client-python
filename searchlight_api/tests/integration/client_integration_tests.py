@@ -41,7 +41,8 @@ class MockServerRequestHandler(BaseHTTPRequestHandler):
             response_content = json.dumps([{
                     "isActive": True,
                     "accountId": "10550",
-                    "webProperties": "https://api.conductor.com/v3/accounts/10550/web-properties",
+                    "webProperties": "https://api.conductor.com/v3/"
+                                     "accounts/10550/web-properties",
                     "name": "PS Reporting Test",
                 }]
             )
@@ -50,7 +51,8 @@ class MockServerRequestHandler(BaseHTTPRequestHandler):
                     "isActive": True,
                     "rankSourceInfo": [],
                     "webPropertyId": "43162",
-                    "trackedSearchList": "https://api.conductor.com/v3/accounts/10550/web-properties/43162/"
+                    "trackedSearchList": "https://api.conductor.com/v3/"
+                                         "accounts/10550/web-properties/43162/"
                                          "tracked-searches",
                     "name": "conductor.com"
                 }]
@@ -76,7 +78,11 @@ class MockServerRequestHandler(BaseHTTPRequestHandler):
             )
         elif "/serp-items?apiKey" in self.path:
             response_content = json.dumps([{
-                    "ranks": {"UNIVERSAL_RANK": None, "TRUE_RANK": 6, "CLASSIC_RANK": 3},
+                    "ranks": {
+                        "UNIVERSAL_RANK": None,
+                        "TRUE_RANK": 6,
+                        "CLASSIC_RANK": 3
+                    },
                     "webPropertyId": 43162,
                     "trackedSearchId": 7188291,
                     "itemType": "ANSWER_BOX",
@@ -117,14 +123,19 @@ class TestMockServer(object):
     @classmethod
     def setup_class(cls):
         cls.mock_server_port = get_free_port()
-        cls.mock_url = "http://localhost:{port}".format(port=cls.mock_server_port)
+        cls.mock_url = "http://localhost:{port}".format(
+            port=cls.mock_server_port
+        )
         start_mock_server(cls.mock_server_port)
 
     def test_get_locations(self):
         with patch.dict("searchlight_api.client.__dict__", {"API_BASE_URL": self.mock_url}):
             ss = SearchlightService()
             locations = ss.get_locations()
-        assert_list_equal(locations, [{"locationId": "1", "description": "United States"}])
+        assert_list_equal(locations, [{
+            "locationId": "1",
+            "description": "United States"}
+        ])
 
     def test_get_engines(self):
         with patch.dict("searchlight_api.client.__dict__", {"API_BASE_URL": self.mock_url}):
@@ -154,7 +165,8 @@ class TestMockServer(object):
         assert_list_equal(accounts, [{
             "isActive": True,
             "accountId": "10550",
-            "webProperties": "https://api.conductor.com/v3/accounts/10550/web-properties",
+            "webProperties": "https://api.conductor.com/v3/"
+                             "accounts/10550/web-properties",
             "name": "PS Reporting Test",
         }])
 
@@ -166,7 +178,8 @@ class TestMockServer(object):
             "isActive": True,
             "rankSourceInfo": [],
             "webPropertyId": "43162",
-            "trackedSearchList": "https://api.conductor.com/v3/accounts/10550/web-properties/43162/tracked-searches",
+            "trackedSearchList": "https://api.conductor.com/v3/accounts/"
+                                 "10550/web-properties/43162/tracked-searches",
             "name": "conductor.com"
         }])
 

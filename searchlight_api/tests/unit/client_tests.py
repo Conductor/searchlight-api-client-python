@@ -46,7 +46,8 @@ class BasicSearchlightServiceUnitTest(TestCase):
         ss.get_accounts.return_value = [{
             "isActive": True,
             "accountId": "10550",
-            "webProperties": "https://api.conductor.com/v3/accounts/10550/web-properties",
+            "webProperties": "https://api.conductor.com/v3/accounts/"
+                             "10550/web-properties",
             "name": "PS Reporting Test",
         }]
         data = ss.get_accounts()
@@ -63,7 +64,8 @@ class BasicAccountServiceUnitTest(TestCase):
             "isActive": True,
             "rankSourceInfo": [],
             "webPropertyId": "43162",
-            "trackedSearchList": "https://api.conductor.com/v3/accounts/10550/web-properties/43162/tracked-searches",
+            "trackedSearchList": "https://api.conductor.com/v3/accounts/10550/"
+                                 "web-properties/43162/tracked-searches",
             "name": "conductor.com"
         }]
         data = ss.get_web_properties()
@@ -119,7 +121,11 @@ class BasicAccountServiceUnitTest(TestCase):
     def test_get_ranks(self, MockAccountServices):
         ss = MockAccountServices()
         ss.get_ranks.return_value = [{
-            "ranks": {"UNIVERSAL_RANK": None, "TRUE_RANK": 6, "CLASSIC_RANK": 3},
+            "ranks": {
+                "UNIVERSAL_RANK": None,
+                "TRUE_RANK": 6,
+                "CLASSIC_RANK": 3
+            },
             "webPropertyId": 43162,
             "trackedSearchId": 7188291,
             "itemType": "ANSWER_BOX",
