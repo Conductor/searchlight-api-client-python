@@ -48,5 +48,7 @@ def rank_data(account_id, date="CURRENT"):
             ranks = ss.get_ranks(wpid, rsid, date)
             if not ranks:
                 continue
-            ranks_list.extend([r.update({"rankSourceId": rsid}) for r in ranks])
+            for r in ranks:
+                r.update({"rankSourceId": rsid})
+            ranks_list.extend(ranks)
     return ranks_list
