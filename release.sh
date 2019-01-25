@@ -9,5 +9,5 @@ else
 fi
 
 # publish a new version (will result in an error if VERSION does not have a new version)
-make build-source pypi-upload
+make build upload
 exit

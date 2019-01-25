@@ -5,20 +5,21 @@ help:
 	# make help		              - Shows this message
 	#
 	# Dev commands:
-	# make install                        - Install requirements.txt
-	# make test                           - Builds all required images
+	# make install                        - Installs dependencies in requirements.txt
+	# make test                           - Runs unit and integration tests using nosetests
 	#
+	# Build commands:
+	# make build                          - Builds package tar.gz
+	# make upload                         - Uploads package to pypi
 
-test: nosetests
+test:
+    @python3 setup.py nosetests
 
-pypi-upload:
+upload:
 	twine upload dist/*
 
-build-source:
+build:
 	@python3 setup.py sdist
-
-nosetests:
-	@python3 setup.py nosetests
 
 install:
 	@pip3 install -r requirements.txt
