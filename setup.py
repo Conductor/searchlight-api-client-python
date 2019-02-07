@@ -14,10 +14,6 @@ setup(
     license="LICENSE",
     url="https://github.com/Conductor/searchlight-api-client-python",
     packages=find_packages(exclude=("docs", "searchlight_api.tests")),
-    setup_requires=[
-        "nose==1.3.7",
-        "twine==1.12.1"
-    ],
     install_requires=[
         "requests>=2.19.1",
         "simplejson>=3.11.1"
