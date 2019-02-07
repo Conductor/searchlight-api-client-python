@@ -19,9 +19,11 @@ pip install searchlight-api
 
 ### Authentication
 The Searchlight API Client needs to know your API Key and API Secret to authenticate with Searchlight. It can find these in one of two ways:
-* Preferred: Edit your .bash_profile (MacOS/Linux) or yyyyy (Windows) file to include the line
-    export SEARCHLIGHT_API_KEY=xxxxx
-    export SEARCHLIGHT_SHARED_SECRET=xxxxxx
+* Add the credentials to your environmental variables (preferred)
+    * MacOS / Linux: Edit your .bash_profile to include the lines
+        * export SEARCHLIGHT_API_KEY=xxxxx
+        * export SEARCHLIGHT_SHARED_SECRET=xxxxxx
+    * Windows: Add SEARCHLIGHT_API_KEY and SEARCHLIGHT_SHARED_SECRET in the [Environment Variables in the Advanced system settings](https://docs.microsoft.com/en-us/windows/desktop/procthread/environment-variables)
 * Pass the credentials when instantiating the API Client
     from searchlight_api.client import AccountService
     account_service = AccountService(api_key=xxxxx, secret=xxxxx)

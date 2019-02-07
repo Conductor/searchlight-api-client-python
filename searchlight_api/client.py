@@ -35,28 +35,20 @@ class SearchlightService(object):
             os.getenv("SEARCHLIGHT_API_KEY")
         )
         if not self._api_key:
-            raise CredentialsMissingError(
-                "Searchlight API key required. If you have one "
-                "either add it to environment as SEARCHLIGHT_API_KEY "
-                "or pass it as the api_key parameter. If you do"
-                " not have one you can request one here: "
-                "http://developers.conductor.com/"
-            )
+            raise CredentialsMissingError(token="Searchlight API Key")
         self._secret = kwargs.get(
             "secret",
             os.getenv("SEARCHLIGHT_SHARED_SECRET")
         )
         if not self._secret:
-            raise CredentialsMissingError(
-                "Searchlight Shared Secret required. If you have one "
-                "either add it to environment as SEARCHlIGHT_SHARED_SECRET "
-                "or pass it as the secret parameter. If you do"
-                " not have one you can request one here: "
-                "http://developers.conductor.com/"
-            )
+            raise CredentialsMissingError(token="Searchlight Shared Secret")
         self._session = requests.Session()
         self._base_url = API_BASE_URL
-        self._v3_url = "{base_url}/v3".format(base_url=self._base_url)
+        self._v3_url = "{base_url}/v3".format(
+            base_url=self._base_url
+        )
+        self.accounts = self.get_accounts()
+        assert self.accounts, "API Key or Secret is not valid"
 
     def _generate_signature(self):
         """Generates API signature for request"""
@@ -77,24 +69,29 @@ class SearchlightService(object):
                 verify=verify,
                 allow_redirects=redirects
             )
-            if res.raise_for_status():
+            if res.status_code >= 400:
                 if retry:
                     print("Status Code: {status_code}. Retrying".format(
                         status_code=res.status_code))
                     return self._make_request(url, retry=False)
                 else:
-                    return print("{url} failed to respond".format(url=url))
+                    print("{url} failed to respond".format(url=url))
+                    return
             data = res.json()
         except (ConnectionRefusedError,
                 ConnectionResetError,
                 ConnectionAbortedError) as e:
-            return print("Error connecting to Searchlight:"
-                         " {error}".format(error=e))
+            print("Error connecting to Searchlight: {error}".format(
+                error=e)
+            )
+            return
         except json.JSONDecodeError:
-            return print("Unable to decode response from server")
+            print("Unable to decode response from server")
+            return
         except requests.exceptions.ChunkedEncodingError:
-            return print("Searchlight response delayed, skipping retrieval..:"
-                         " {info}".format(info=sys.exc_info()[0]))
+            print("Searchlight response delayed, skipping retrieval..:"
+                  " {info}".format(info=sys.exc_info()[0]))
+            return
         return data
 
     # Searchlight Configuration Data
@@ -127,17 +124,23 @@ class SearchlightService(object):
 
     def get_accounts(self):
         """Returns all available Searchlight accounts"""
-        return self._make_request(
-            "{v3_url}/accounts".format(
-                v3_url=self._v3_url
+        if hasattr(self, "accounts"):
+            return self.accounts
+        else:
+            return self._make_request(
+                "{v3_url}/accounts".format(
+                    v3_url=self._v3_url
+                ), retry=False
             )
-        )
 
 
 class AccountService(SearchlightService):
     def __init__(self, account_id, **kwargs):
         SearchlightService.__init__(self, **kwargs)
         self.account_id = account_id
+        assert any([acct["accountId"] == str(self.account_id) for acct in
+                    self.accounts]), "Invalid account ID. Confirm you have " \
+                                     "access to this account"
     # Account Configuration Data
 
     def get_web_properties(self):
