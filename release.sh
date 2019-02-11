@@ -11,5 +11,5 @@ else
 fi
 
 # publish a new version (will result in an error if VERSION does not have a new version)
-make install build upload
+make build upload
 exit
