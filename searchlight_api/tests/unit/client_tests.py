@@ -58,8 +58,8 @@ class BasicSearchlightServiceUnitTest(TestCase):
 class BasicAccountServiceUnitTest(TestCase):
 
     @patch("searchlight_api.client.AccountService")
-    def test_get_web_properties(self, MockAccountServices):
-        ss = MockAccountServices()
+    def test_get_web_properties(self, MockAccountService):
+        ss = MockAccountService(10550)
         ss.get_web_properties.return_value = [{
             "isActive": True,
             "rankSourceInfo": [],
@@ -73,24 +73,24 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsInstance(data[0], dict)
 
     @patch("searchlight_api.client.AccountService")
-    def test_get_domain_name(self, MockAccountServices):
-        ss = MockAccountServices()
+    def test_get_domain_name(self, MockAccountService):
+        ss = MockAccountService(10550)
         ss.get_domain_name.return_value = "conductor.com"
         domain_name = ss.get_domain_name(43162)
         self.assertIsNotNone(domain_name)
         self.assertIsInstance(domain_name, str)
 
     @patch("searchlight_api.client.AccountService")
-    def test_get_web_properties_for_domain(self, MockAccountServices):
-        ss = MockAccountServices()
+    def test_get_web_properties_for_domain(self, MockAccountService):
+        ss = MockAccountService(10550)
         ss.et_web_properties_for_domain.return_value = [43162]
         wps = ss.et_web_properties_for_domain()
         self.assertIsNotNone(wps)
         self.assertIsInstance(wps[0], int)
 
     @patch("searchlight_api.client.AccountService")
-    def test_get_tracked_searches(self, MockAccountServices):
-        ss = MockAccountServices()
+    def test_get_tracked_searches(self, MockAccountService):
+        ss = MockAccountService(10550)
         ss.get_tracked_searches.return_value = [{
             "isActive": True,
             "trackedSearchId": "7188291",
@@ -105,8 +105,8 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsInstance(data[0], dict)
 
     @patch("searchlight_api.client.AccountService")
-    def test_get_categories(self, MockAccountServices):
-        ss = MockAccountServices()
+    def test_get_categories(self, MockAccountService):
+        ss = MockAccountService(10550)
         ss.get_categories.return_value = [{
             "created": "2018-02-12T13:53:46.000Z",
             "trackedSearchIds": [],
@@ -118,8 +118,8 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsInstance(data[0], dict)
 
     @patch("searchlight_api.client.AccountService")
-    def test_get_ranks(self, MockAccountServices):
-        ss = MockAccountServices()
+    def test_get_ranks(self, MockAccountService):
+        ss = MockAccountService(10550)
         ss.get_ranks.return_value = [{
             "ranks": {
                 "UNIVERSAL_RANK": None,
@@ -138,8 +138,8 @@ class BasicAccountServiceUnitTest(TestCase):
         self.assertIsInstance(data[0], dict)
 
     @patch("searchlight_api.client.AccountService")
-    def test_get_volume(self, MockAccountServices):
-        ss = MockAccountServices()
+    def test_get_volume(self, MockAccountService):
+        ss = MockAccountService(10550)
         ss.get_volume.return_value = [{
             "averageVolume": 135000,
             "trackedSearchId": 7188291,
