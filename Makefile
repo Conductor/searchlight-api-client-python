@@ -13,14 +13,14 @@ help:
 	# make upload                         - Uploads package to pypi
 
 test:
-	@python3 setup.py nosetests
+	@python3.6 setup.py nosetests
 
 upload:
 	twine upload dist/*
 
 build:
-	@python3 setup.py sdist
+	@python3.6 setup.py sdist
 
 
 install:
-	@pip3 install -r requirements.txt
+	@pyton3.6 -m pip install -r requirements.txt
