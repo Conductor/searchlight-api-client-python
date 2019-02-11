@@ -61,6 +61,7 @@ class SearchlightService(object):
         ).hexdigest()
 
     def _make_request(self, url, retry=True, verify=True, redirects=True):
+        """Generic function to make get requests to SL API"""   
         url += "?apiKey={key}&sig={sig}".format(
             key=self._api_key, sig=self._generate_signature())
         try:
