@@ -1,6 +1,5 @@
 # searchlight-api-client-python
 ![Latest Version](https://img.shields.io/pypi/v/searchlight-api.svg)
-![Build Status](https://shields.us-east-1.conductor.sh/jenkins/j/http/jenkins-release.infra.us-east-1.conductor.sh/opensource/searchlight-api-client-python.svg)
 
 The Searchlight API Client is a Python package that makes it easy to authenticate with and retrieve data from the Conductor Searchlight API.
 
