@@ -22,4 +22,4 @@ build:
 	@python3.6 setup.py sdist
 
 install:
-	@python3.6 -m pip install -r requirements.txt
+	@python3.6 -m pip install --user jenkins -r requirements.txt
