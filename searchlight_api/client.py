@@ -21,6 +21,8 @@ import time
 import simplejson as json
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 from .utils import week_number
 from .errors import CredentialsMissingError
@@ -42,13 +44,27 @@ class SearchlightService(object):
         )
         if not self._secret:
             raise CredentialsMissingError(token="Searchlight Shared Secret")
-        self._session = requests.Session()
+        self._session = self._build_session()
         self._base_url = API_BASE_URL
         self._v3_url = "{base_url}/v3".format(
             base_url=self._base_url
         )
         self.accounts = self.get_accounts()
         assert self.accounts, "API Key or Secret is not valid"
+
+    @staticmethod
+    def _build_session():
+        """Constructs session to interface with REST API"""
+        status_forcelist = frozenset([500, 502, 503, 504])
+        session = requests.Session()
+        retries = Retry(
+            total=5,
+            backoff_factor=0.3,
+            status_forcelist=status_forcelist
+        )
+        adapter = HTTPAdapter(max_retries=retries)
+        session.mount("https://", adapter)
+        return session
 
     def _generate_signature(self):
         """Generates API signature for request"""
@@ -60,24 +76,18 @@ class SearchlightService(object):
             ).encode()
         ).hexdigest()
 
-    def _make_request(self, url, retry=True, verify=True, redirects=True):
+    def _make_request(self, url, verify=True, redirects=True):
         """Generic function to make get requests to SL API"""   
         url += "?apiKey={key}&sig={sig}".format(
-            key=self._api_key, sig=self._generate_signature())
+            key=self._api_key,
+            sig=self._generate_signature()
+        )
         try:
             res = self._session.get(
                 url,
                 verify=verify,
                 allow_redirects=redirects
             )
-            if res.status_code >= 400:
-                if retry:
-                    print("Status Code: {status_code}. Retrying".format(
-                        status_code=res.status_code))
-                    return self._make_request(url, retry=False)
-                else:
-                    print("{url} failed to respond".format(url=url))
-                    return
             data = res.json()
         except (ConnectionRefusedError,
                 ConnectionResetError,
@@ -131,7 +141,7 @@ class SearchlightService(object):
             return self._make_request(
                 "{v3_url}/accounts".format(
                     v3_url=self._v3_url
-                ), retry=False
+                )
             )
 
 
