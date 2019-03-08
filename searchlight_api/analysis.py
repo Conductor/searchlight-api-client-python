@@ -16,7 +16,7 @@ limitations under the License.
 
 
 def search_volume(account_service, date="CURRENT"):
-    """Build a search volume data frame for a given date for all tracked searches
+    """Build a search volume aggregated json for a given date for all tracked searches
     in an account across rank sources and web properties"""
     web_properties = [wp for wp in account_service.get_web_properties()]
     volumes_list = []
@@ -34,7 +34,7 @@ def search_volume(account_service, date="CURRENT"):
 
 
 def rank_data(account_service, date="CURRENT"):
-    """Build a data frame for all ranks in a given date for all tracked searches
+    """Aggregates all ranks in a given date for all tracked searches
     in an account across rank sources and web properties"""
     web_properties = [wp for wp in account_service.get_web_properties()]
     ranks_list = []
@@ -57,6 +57,7 @@ def rank_data(account_service, date="CURRENT"):
 
 
 def all_tracked_searches(account_service):
+    """Aggregates all tracked searches  for all web properties in a given account"""
     web_properties = [wp for wp in account_service.get_web_properties()]
     tracked_search_list = []
     for wp in web_properties:
