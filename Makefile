@@ -13,13 +13,13 @@ help:
 	# make upload                         - Uploads package to pypi
 
 test:
-	@python3.6 setup.py nosetests
+	@python3.7 setup.py nosetests
 
 upload:
 	twine upload dist/*
 
 build:
-	@python3.6 setup.py sdist
+	@python3.7 setup.py sdist
 
 install:
-	@python3.6 -m pip install --user jenkins -r requirements.txt
+	@python3.7 -m pip install --user jenkins -r requirements.txt
